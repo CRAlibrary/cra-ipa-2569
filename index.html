@@ -1,555 +1,270 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRA IPA Performance Portal 2569</title>
-    
-    <!-- ========================================== -->
-    <!-- ส่วนที่ 1: ตั้งค่าเริ่มต้น & LIBRARIES -->
-    <!-- ========================================== -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- ========================================== -->
+<!-- ส่วนที่ 1: ตั้งค่าเริ่มต้น & LIBRARIES -->
+<!-- ========================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'deep-navy': '#123C77',
-                        'royal-blue': '#2563EB',
-                        'brand-orange': '#F97316',
-                        'bg-light': '#F5F7FB',
-                        'text-main': '#172B4D',
-                    },
-                    fontFamily: { sans: ['Sarabun', 'sans-serif'] },
-                }
+<!-- Tailwind Config -->
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'deep-navy': '#123C77',
+                    'royal-blue': '#2563EB',
+                    'brand-orange': '#F97316',
+                    'bg-light': '#F5F7FB',
+                    'text-main': '#172B4D',
+                },
+                fontFamily: { sans: ['Sarabun', 'sans-serif'] },
             }
         }
-    </script>
+    }
+</script>
 
-    <!-- Custom CSS -->
-    <style>
-        body { background-color: #F5F7FB; color: #172B4D; line-height: 1.7; }
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card-shadow:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-        }
-        
-        .accordion-content {
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
-            max-height: 0; overflow: hidden;
-        }
-        .accordion-content.open { max-height: 800px; }
-    </style>
-</head>
-<body class="text-[17px] antialiased flex h-screen overflow-hidden">
+<!-- เรียกใช้ไฟล์ CSS ที่แยกออกไป -->
+<link rel="stylesheet" href="styles.css">
 
-    <!-- ========================================== -->
-    <!-- ส่วนที่ 2.1: SIDEBAR (แถบเมนูด้านซ้าย) -->
-    <!-- ========================================== -->
-    <aside id="sidebar" class="bg-deep-navy text-white w-64 flex-shrink-0 hidden md:flex flex-col transition-all duration-300 z-20 absolute md:relative h-full">
-        <div class="p-6 flex items-center justify-between border-b border-blue-800">
+
+<!-- ========================================== -->
+<!-- ส่วนที่ 2.1: SIDEBAR (แถบเมนูด้านซ้าย) -->
+<!-- ========================================== -->
+<aside id="sidebar" class="bg-deep-navy text-white w-64 flex-shrink-0 hidden md:flex flex-col transition-all duration-300 z-20 absolute md:relative h-full">
+    <div class="p-6 flex items-center justify-between border-b border-blue-800">
+        <div>
+            <h1 class="text-xl font-bold leading-tight">CRA IPA</h1>
+            <p class="text-sm text-blue-200">Performance Portal 2569</p>
+        </div>
+        <button id="closeSidebarBtn" class="md:hidden text-white hover:text-gray-300"><i data-lucide="x"></i></button>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+        <a href="#" onclick="navigate('dashboard')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl bg-royal-blue text-white transition-colors">
+            <i data-lucide="layout-dashboard"></i> <span class="font-medium">ภาพรวม (Dashboard)</span>
+        </a>
+        <a href="#" onclick="navigate('categories')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
+            <i data-lucide="folder-kanban"></i> <span class="font-medium">ตัวชี้วัดและภาระงาน</span>
+        </a>
+        <!-- เมนูของ OWNER -->
+        <a href="#" id="nav-evidence" onclick="navigate('evidence')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
+            <i data-lucide="file-up"></i> <span class="font-medium">จัดการหลักฐาน</span>
+        </a>
+        <!-- เมนูของ EVALUATOR -->
+        <a href="#" id="nav-evaluate" onclick="navigate('evaluate')" class="nav-item hidden items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
+            <i data-lucide="clipboard-check"></i> <span class="font-medium">ประเมินผล</span>
+        </a>
+        <a href="#" onclick="navigate('reports')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
+            <i data-lucide="file-bar-chart"></i> <span class="font-medium">รายงานสรุป</span>
+        </a>
+    </nav>
+</aside>
+
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-10 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+<!-- ========================================== -->
+<!-- ส่วนที่ 2.2: HEADER & MAIN CONTENT AREA -->
+<!-- ========================================== -->
+<main class="flex-1 flex flex-col h-full w-full overflow-hidden">
+    <!-- Topbar -->
+    <header class="bg-white h-20 border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0 z-10 shadow-sm">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleSidebar()" class="md:hidden text-text-main hover:text-royal-blue transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <h2 id="pageTitle" class="text-2xl md:text-3xl font-bold text-text-main hidden sm:block">ภาพรวมโครงการ</h2>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div id="roleBadge" class="px-3 py-1.5 rounded-lg border font-bold text-sm hidden md:block"></div>
+                <button onclick="showLinkModal()" class="bg-bg-light hover:bg-gray-200 text-text-main px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-bold transition-colors flex items-center gap-2">
+                    <i data-lucide="link" class="w-4 h-4"></i> รับลิงก์เข้าใช้งาน
+                </button>
+            </div>
+            <div class="flex items-center gap-3 border-l pl-6">
+                <div class="text-right hidden md:block">
+                    <p class="text-sm font-bold text-text-main leading-tight">ณัฏฌานันท์ พุ่มระกำ</p>
+                    <p class="text-[13px] text-gray-500" id="userRoleDisplay">ผู้รับการประเมิน</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-royal-blue text-white flex items-center justify-center font-bold text-lg">ณ</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="flex-1 overflow-y-auto p-4 md:p-8 w-full max-w-[1440px] mx-auto" id="mainContent">
+        
+        <!-- VIEW 1: Dashboard -->
+        <div id="view-dashboard" class="space-y-8 animate-fade-in">
+            <!-- สถิติ -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex text-royal-blue items-center justify-center"><i data-lucide="briefcase"></i></div>
+                    <div><p class="text-gray-500 font-medium">ภาระงานทั้งหมด</p><p class="text-3xl font-bold mt-1">13 <span class="text-sm font-normal text-gray-400">งาน</span></p></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-full bg-indigo-50 flex text-indigo-600 items-center justify-center"><i data-lucide="target"></i></div>
+                    <div><p class="text-gray-500 font-medium">ตัวชี้วัดย่อย</p><p class="text-3xl font-bold mt-1">32 <span class="text-sm font-normal text-gray-400">ข้อ</span></p></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-full bg-orange-50 flex text-brand-orange items-center justify-center"><i data-lucide="file-check-2"></i></div>
+                    <div><p class="text-gray-500 font-medium">ตัวชี้วัดที่มีหลักฐาน</p><p class="text-3xl font-bold mt-1" id="dashEvidenceCount">0/32</p></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-full bg-emerald-50 flex text-emerald-600 items-center justify-center"><i data-lucide="trending-up"></i></div>
+                    <div><p class="text-gray-500 font-medium">ความพร้อมหลักฐาน</p><p class="text-3xl font-bold mt-1" id="dashEvidencePercent">0%</p></div>
+                </div>
+            </div>
+
+            <!-- การ์ดหมวดงาน -->
             <div>
-                <h1 class="text-xl font-bold leading-tight">CRA IPA</h1>
-                <p class="text-sm text-blue-200">Performance Portal 2569</p>
+                <h3 class="text-2xl font-bold text-text-main mb-6 flex items-center gap-2"><i data-lucide="layers" class="text-royal-blue"></i> หมวดงานประเมินผล</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="categoryCardsContainer"></div>
             </div>
-            <button id="closeSidebarBtn" class="md:hidden text-white hover:text-gray-300"><i data-lucide="x"></i></button>
+            
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow">
+                <h3 class="text-xl font-bold text-text-main mb-6">ภาพรวมความคืบหน้าแบ่งตามหมวดงาน</h3>
+                <div class="h-64 w-full"><canvas id="progressChart"></canvas></div>
+            </div>
         </div>
 
-        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-            <a href="#" onclick="navigate('dashboard')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl bg-royal-blue text-white transition-colors">
-                <i data-lucide="layout-dashboard"></i> <span class="font-medium">ภาพรวม (Dashboard)</span>
-            </a>
-            <a href="#" onclick="navigate('categories')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
-                <i data-lucide="folder-kanban"></i> <span class="font-medium">ตัวชี้วัดและภาระงาน</span>
-            </a>
-            <!-- เมนูของ OWNER -->
-            <a href="#" id="nav-evidence" onclick="navigate('evidence')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
-                <i data-lucide="file-up"></i> <span class="font-medium">จัดการหลักฐาน</span>
-            </a>
-            <!-- เมนูของ EVALUATOR -->
-            <a href="#" id="nav-evaluate" onclick="navigate('evaluate')" class="nav-item hidden items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
-                <i data-lucide="clipboard-check"></i> <span class="font-medium">ประเมินผล</span>
-            </a>
-            <a href="#" onclick="navigate('reports')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-800 text-blue-100 transition-colors">
-                <i data-lucide="file-bar-chart"></i> <span class="font-medium">รายงานสรุป</span>
-            </a>
-        </nav>
-    </aside>
+        <!-- VIEW 2: Categories (รายละเอียดตัวชี้วัด) -->
+        <div id="view-categories" class="hidden space-y-6 animate-fade-in">
+            <button onclick="navigate('dashboard')" class="text-royal-blue hover:text-blue-800 font-medium flex items-center gap-2 mb-4">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> กลับไปหน้าภาพรวม
+            </button>
+            <div id="taskDetailsContainer"></div>
+        </div>
 
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-10 hidden md:hidden" onclick="toggleSidebar()"></div>
-
-    <!-- ========================================== -->
-    <!-- ส่วนที่ 2.2: HEADER & MAIN CONTENT AREA -->
-    <!-- ========================================== -->
-    <main class="flex-1 flex flex-col h-full w-full overflow-hidden">
-        <!-- Topbar -->
-        <header class="bg-white h-20 border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0 z-10 shadow-sm">
-            <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="md:hidden text-text-main hover:text-royal-blue transition-colors">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
+        <!-- VIEW 3: Evidence (ตารางจัดการหลักฐาน) -->
+        <div id="view-evidence" class="hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <p class="text-gray-600">จัดการไฟล์และลิงก์หลักฐานประกอบการประเมินของคุณ</p>
+                <button onclick="openEvidenceModal()" class="bg-brand-orange hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 transition-all flex items-center gap-2">
+                    <i data-lucide="plus-circle"></i> เพิ่มหลักฐานใหม่
                 </button>
-                <h2 id="pageTitle" class="text-2xl md:text-3xl font-bold text-text-main hidden sm:block">ภาพรวมโครงการ</h2>
             </div>
-
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-3">
-                    <div id="roleBadge" class="px-3 py-1.5 rounded-lg border font-bold text-sm hidden md:block"></div>
-                    <button onclick="showLinkModal()" class="bg-bg-light hover:bg-gray-200 text-text-main px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-bold transition-colors flex items-center gap-2">
-                        <i data-lucide="link" class="w-4 h-4"></i> รับลิงก์เข้าใช้งาน
-                    </button>
-                </div>
-                <div class="flex items-center gap-3 border-l pl-6">
-                    <div class="text-right hidden md:block">
-                        <p class="text-sm font-bold text-text-main leading-tight">ณัฏฌานันท์ พุ่มระกำ</p>
-                        <p class="text-[13px] text-gray-500" id="userRoleDisplay">ผู้รับการประเมิน</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-royal-blue text-white flex items-center justify-center font-bold text-lg">ณ</div>
-                </div>
+            <div class="bg-white rounded-2xl border border-gray-100 card-shadow overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-bg-light text-gray-600 text-sm border-b border-gray-200">
+                            <th class="p-4 font-bold">ชื่อหลักฐาน</th>
+                            <th class="p-4 font-bold">ประเภท</th>
+                            <th class="p-4 font-bold">เชื่อมโยงตัวชี้วัด</th>
+                            <th class="p-4 font-bold text-center">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="evidenceTableBody" class="text-[15px]"></tbody>
+                </table>
             </div>
-        </header>
-
-        <!-- Content Area -->
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 w-full max-w-[1440px] mx-auto" id="mainContent">
-            
-            <!-- VIEW 1: Dashboard -->
-            <div id="view-dashboard" class="space-y-8 animate-fade-in">
-                <!-- สถิติ -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-full bg-blue-50 flex text-royal-blue items-center justify-center"><i data-lucide="briefcase"></i></div>
-                        <div><p class="text-gray-500 font-medium">ภาระงานทั้งหมด</p><p class="text-3xl font-bold mt-1">13 <span class="text-sm font-normal text-gray-400">งาน</span></p></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-full bg-indigo-50 flex text-indigo-600 items-center justify-center"><i data-lucide="target"></i></div>
-                        <div><p class="text-gray-500 font-medium">ตัวชี้วัดย่อย</p><p class="text-3xl font-bold mt-1">32 <span class="text-sm font-normal text-gray-400">ข้อ</span></p></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-full bg-orange-50 flex text-brand-orange items-center justify-center"><i data-lucide="file-check-2"></i></div>
-                        <div><p class="text-gray-500 font-medium">ตัวชี้วัดที่มีหลักฐาน</p><p class="text-3xl font-bold mt-1" id="dashEvidenceCount">0/32</p></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-full bg-emerald-50 flex text-emerald-600 items-center justify-center"><i data-lucide="trending-up"></i></div>
-                        <div><p class="text-gray-500 font-medium">ความพร้อมหลักฐาน</p><p class="text-3xl font-bold mt-1" id="dashEvidencePercent">0%</p></div>
-                    </div>
-                </div>
-
-                <!-- การ์ดหมวดงาน -->
-                <div>
-                    <h3 class="text-2xl font-bold text-text-main mb-6 flex items-center gap-2"><i data-lucide="layers" class="text-royal-blue"></i> หมวดงานประเมินผล</h3>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="categoryCardsContainer"></div>
-                </div>
-                
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow">
-                    <h3 class="text-xl font-bold text-text-main mb-6">ภาพรวมความคืบหน้าแบ่งตามหมวดงาน</h3>
-                    <div class="h-64 w-full"><canvas id="progressChart"></canvas></div>
-                </div>
-            </div>
-
-            <!-- VIEW 2: Categories (รายละเอียดตัวชี้วัด) -->
-            <div id="view-categories" class="hidden space-y-6 animate-fade-in">
-                <button onclick="navigate('dashboard')" class="text-royal-blue hover:text-blue-800 font-medium flex items-center gap-2 mb-4">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i> กลับไปหน้าภาพรวม
-                </button>
-                <div id="taskDetailsContainer"></div>
-            </div>
-
-            <!-- VIEW 3: Evidence (ตารางจัดการหลักฐาน) -->
-            <div id="view-evidence" class="hidden space-y-6 animate-fade-in">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <p class="text-gray-600">จัดการไฟล์และลิงก์หลักฐานประกอบการประเมินของคุณ</p>
-                    <button onclick="openEvidenceModal()" class="bg-brand-orange hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 transition-all flex items-center gap-2">
-                        <i data-lucide="plus-circle"></i> เพิ่มหลักฐานใหม่
-                    </button>
-                </div>
-                <div class="bg-white rounded-2xl border border-gray-100 card-shadow overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-bg-light text-gray-600 text-sm border-b border-gray-200">
-                                <th class="p-4 font-bold">ชื่อหลักฐาน</th>
-                                <th class="p-4 font-bold">ประเภท</th>
-                                <th class="p-4 font-bold">เชื่อมโยงตัวชี้วัด</th>
-                                <th class="p-4 font-bold text-center">จัดการ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="evidenceTableBody" class="text-[15px]"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- VIEW 4: Evaluate (หน้าให้คะแนนของหัวหน้า) -->
-            <div id="view-evaluate" class="hidden space-y-6 animate-fade-in">
-                 <p class="text-gray-600 mb-6">ตรวจสอบหลักฐานและบันทึกผลคะแนนสำหรับผู้รับการประเมิน</p>
-                 <div class="bg-white rounded-2xl border border-gray-100 card-shadow p-6">
-                    <h3 class="text-xl font-bold mb-4">รายการที่รอการประเมิน</h3>
-                    <div class="space-y-4" id="evaluatorListContainer"></div>
-                 </div>
-            </div>
-
-            <!-- VIEW 5: Reports -->
-            <div id="view-reports" class="hidden space-y-6 animate-fade-in">
-                <div class="bg-white rounded-2xl card-shadow p-8 text-center max-w-2xl mx-auto mt-10">
-                    <i data-lucide="file-text" class="w-16 h-16 text-royal-blue mx-auto mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-3">ระบบส่งออกรายงาน (PDF)</h3>
-                    <p class="text-gray-600 mb-8">อยู่ระหว่างการพัฒนา รอผลการประเมินรอบสมบูรณ์</p>
-                </div>
-            </div>
-
         </div>
-    </main>
 
-    <!-- ========================================== -->
-    <!-- ส่วนที่ 2.3: MODALS (หน้าต่าง Pop-up) -->
-    <!-- ========================================== -->
-    
-    <!-- Modal: อัปโหลดหลักฐาน -->
-    <div id="evidenceModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto flex flex-col">
-            <div class="p-6 border-b border-gray-100 flex justify-between bg-white sticky top-0">
-                <h3 class="text-xl font-bold">เพิ่มหลักฐานใหม่</h3>
-                <button onclick="closeEvidenceModal()"><i data-lucide="x"></i></button>
+        <!-- VIEW 4: Evaluate (หน้าให้คะแนนของหัวหน้า) -->
+        <div id="view-evaluate" class="hidden space-y-6 animate-fade-in">
+             <p class="text-gray-600 mb-6">ตรวจสอบหลักฐานและบันทึกผลคะแนนสำหรับผู้รับการประเมิน</p>
+             <div class="bg-white rounded-2xl border border-gray-100 card-shadow p-6">
+                <h3 class="text-xl font-bold mb-4">รายการที่รอการประเมิน</h3>
+                <div class="space-y-4" id="evaluatorListContainer"></div>
+             </div>
+        </div>
+
+        <!-- VIEW 5: Reports -->
+        <div id="view-reports" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white rounded-2xl card-shadow p-8 text-center max-w-2xl mx-auto mt-10">
+                <i data-lucide="file-text" class="w-16 h-16 text-royal-blue mx-auto mb-4"></i>
+                <h3 class="text-2xl font-bold mb-3">ระบบส่งออกรายงาน (PDF)</h3>
+                <p class="text-gray-600 mb-8">อยู่ระหว่างการพัฒนา รอผลการประเมินรอบสมบูรณ์</p>
             </div>
-            <div class="p-6 space-y-4 flex-1">
-                <input type="text" id="evTitle" class="w-full px-4 py-3 rounded-xl border" placeholder="ชื่อหลักฐาน เช่น รูปกิจกรรม...">
-                <select id="evType" class="w-full px-4 py-3 rounded-xl border">
-                    <option value="link">Google Drive Link / URL</option>
-                    <option value="file">อัปโหลดไฟล์ (จำลอง)</option>
-                </select>
-                <input type="text" id="evUrl" class="w-full px-4 py-3 rounded-xl border" placeholder="URL ลิงก์...">
-                <div class="max-h-48 overflow-y-auto border p-2 bg-gray-50 rounded-xl" id="evIndicatorsList"></div>
+        </div>
+
+    </div>
+</main>
+
+<!-- ========================================== -->
+<!-- ส่วนที่ 2.3: MODALS (หน้าต่าง Pop-up) -->
+<!-- ========================================== -->
+
+<!-- Modal: อัปโหลดหลักฐาน -->
+<div id="evidenceModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto flex flex-col">
+        <div class="p-6 border-b border-gray-100 flex justify-between bg-white sticky top-0">
+            <h3 class="text-xl font-bold">เพิ่มหลักฐานใหม่</h3>
+            <button onclick="closeEvidenceModal()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="p-6 space-y-4 flex-1">
+            <input type="text" id="evTitle" class="w-full px-4 py-3 rounded-xl border" placeholder="ชื่อหลักฐาน เช่น รูปกิจกรรม...">
+            <select id="evType" class="w-full px-4 py-3 rounded-xl border">
+                <option value="link">Google Drive Link / URL</option>
+                <option value="file">อัปโหลดไฟล์ (จำลอง)</option>
+            </select>
+            <input type="text" id="evUrl" class="w-full px-4 py-3 rounded-xl border" placeholder="URL ลิงก์...">
+            <div class="max-h-48 overflow-y-auto border p-2 bg-gray-50 rounded-xl" id="evIndicatorsList"></div>
+        </div>
+        <div class="p-6 border-t bg-gray-50 flex justify-end gap-3 sticky bottom-0">
+            <button onclick="closeEvidenceModal()" class="px-6 py-2 rounded-xl text-gray-600">ยกเลิก</button>
+            <button onclick="saveEvidence()" class="bg-royal-blue text-white px-6 py-2 rounded-xl font-bold">บันทึก</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: ประเมินคะแนน -->
+<div id="evaluateModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto flex flex-col">
+        <div class="p-6 border-b flex justify-between bg-white sticky top-0">
+            <h3 class="text-xl font-bold">ประเมินผลตัวชี้วัด</h3>
+            <button onclick="closeEvaluateModal()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="p-6 space-y-4 flex-1">
+            <div class="bg-blue-50 p-4 rounded-xl">
+                <p class="text-sm text-royal-blue font-bold" id="evalTaskName"></p>
+                <h4 class="text-lg font-bold" id="evalIndicatorName"></h4>
             </div>
-            <div class="p-6 border-t bg-gray-50 flex justify-end gap-3 sticky bottom-0">
-                <button onclick="closeEvidenceModal()" class="px-6 py-2 rounded-xl text-gray-600">ยกเลิก</button>
-                <button onclick="saveEvidence()" class="bg-royal-blue text-white px-6 py-2 rounded-xl font-bold">บันทึก</button>
+            <div id="evalEvidenceList" class="space-y-2"></div>
+            <div class="border-t pt-4">
+                <h5 class="font-bold mb-3 text-brand-orange">คะแนน (1-5)</h5>
+                <div class="grid grid-cols-5 gap-2 mb-4">
+                    <button class="score-btn py-2 border rounded-xl font-bold" data-score="1">1</button>
+                    <button class="score-btn py-2 border rounded-xl font-bold" data-score="2">2</button>
+                    <button class="score-btn py-2 border rounded-xl font-bold" data-score="3">3</button>
+                    <button class="score-btn py-2 border rounded-xl font-bold" data-score="4">4</button>
+                    <button class="score-btn py-2 border rounded-xl font-bold" data-score="5">5</button>
+                </div>
+                <input type="hidden" id="selectedScore" value="0">
+                <textarea id="evalComment" class="w-full border rounded-xl p-3" placeholder="ข้อเสนอแนะ..."></textarea>
+            </div>
+        </div>
+        <div class="p-6 border-t bg-gray-50 flex justify-end gap-3 sticky bottom-0">
+            <button onclick="closeEvaluateModal()" class="px-6 py-2 rounded-xl text-gray-600">ยกเลิก</button>
+            <button onclick="saveEvaluation()" class="bg-brand-orange text-white px-6 py-2 rounded-xl font-bold">บันทึกคะแนน</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: เลือกลิงก์เข้าใช้งาน -->
+<div id="linkModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">จำลองลิงก์ใช้งาน</h3>
+            <button onclick="document.getElementById('linkModal').classList.add('hidden')"><i data-lucide="x"></i></button>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">ส่งลิงก์ด้านล่างเพื่อแยกสิทธิ์การทำงาน</p>
+        <div class="space-y-3">
+            <div class="p-3 border rounded-xl bg-blue-50 cursor-pointer" onclick="window.location.href='?role=owner'">
+                <p class="font-bold text-royal-blue">สำหรับฉัน (ผู้รับประเมิน)</p>
+                <p class="text-xs text-gray-500 font-mono mt-1" id="linkOwnerDisplay"></p>
+            </div>
+            <div class="p-3 border rounded-xl bg-orange-50 cursor-pointer" onclick="window.location.href='?role=evaluator'">
+                <p class="font-bold text-brand-orange">สำหรับหัวหน้า (ผู้ประเมิน)</p>
+                <p class="text-xs text-gray-500 font-mono mt-1" id="linkEvaluatorDisplay"></p>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal: ประเมินคะแนน -->
-    <div id="evaluateModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto flex flex-col">
-            <div class="p-6 border-b flex justify-between bg-white sticky top-0">
-                <h3 class="text-xl font-bold">ประเมินผลตัวชี้วัด</h3>
-                <button onclick="closeEvaluateModal()"><i data-lucide="x"></i></button>
-            </div>
-            <div class="p-6 space-y-4 flex-1">
-                <div class="bg-blue-50 p-4 rounded-xl">
-                    <p class="text-sm text-royal-blue font-bold" id="evalTaskName"></p>
-                    <h4 class="text-lg font-bold" id="evalIndicatorName"></h4>
-                </div>
-                <div id="evalEvidenceList" class="space-y-2"></div>
-                <div class="border-t pt-4">
-                    <h5 class="font-bold mb-3 text-brand-orange">คะแนน (1-5)</h5>
-                    <div class="grid grid-cols-5 gap-2 mb-4">
-                        <button class="score-btn py-2 border rounded-xl font-bold" data-score="1">1</button>
-                        <button class="score-btn py-2 border rounded-xl font-bold" data-score="2">2</button>
-                        <button class="score-btn py-2 border rounded-xl font-bold" data-score="3">3</button>
-                        <button class="score-btn py-2 border rounded-xl font-bold" data-score="4">4</button>
-                        <button class="score-btn py-2 border rounded-xl font-bold" data-score="5">5</button>
-                    </div>
-                    <input type="hidden" id="selectedScore" value="0">
-                    <textarea id="evalComment" class="w-full border rounded-xl p-3" placeholder="ข้อเสนอแนะ..."></textarea>
-                </div>
-            </div>
-            <div class="p-6 border-t bg-gray-50 flex justify-end gap-3 sticky bottom-0">
-                <button onclick="closeEvaluateModal()" class="px-6 py-2 rounded-xl text-gray-600">ยกเลิก</button>
-                <button onclick="saveEvaluation()" class="bg-brand-orange text-white px-6 py-2 rounded-xl font-bold">บันทึกคะแนน</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: เลือกลิงก์เข้าใช้งาน -->
-    <div id="linkModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">จำลองลิงก์ใช้งาน</h3>
-                <button onclick="document.getElementById('linkModal').classList.add('hidden')"><i data-lucide="x"></i></button>
-            </div>
-            <p class="text-sm text-gray-600 mb-4">ส่งลิงก์ด้านล่างเพื่อแยกสิทธิ์การทำงาน</p>
-            <div class="space-y-3">
-                <div class="p-3 border rounded-xl bg-blue-50 cursor-pointer" onclick="window.location.href='?role=owner'">
-                    <p class="font-bold text-royal-blue">สำหรับฉัน (ผู้รับประเมิน)</p>
-                    <p class="text-xs text-gray-500 font-mono mt-1" id="linkOwnerDisplay"></p>
-                </div>
-                <div class="p-3 border rounded-xl bg-orange-50 cursor-pointer" onclick="window.location.href='?role=evaluator'">
-                    <p class="font-bold text-brand-orange">สำหรับหัวหน้า (ผู้ประเมิน)</p>
-                    <p class="text-xs text-gray-500 font-mono mt-1" id="linkEvaluatorDisplay"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- ส่วนที่ 3: JAVASCRIPT (ระบบจัดการและเชื่อมต่อ API) -->
-    <!-- ========================================== -->
-    <script>
-        /* -------------------------------------------------------------
-           3.1 ตัวแปรระบบและการเชื่อมต่อ
-           ------------------------------------------------------------- */
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwQBH2f0EnEn-Hoq-xlnIdI-dPJ5EKsigpafqIHaGq7mYzIMQ2vJLy8gf-m4oaxcja4/exec';
-        let currentUserRole = 'OWNER'; 
-        let myChart = null;
-        let DB = { categories: [], tasks: [], indicators: [], evidences: [], evaluations: {} };
-
-        /* -------------------------------------------------------------
-           3.2 ฟังก์ชันเริ่มต้นเมื่อเปิดเว็บ
-           ------------------------------------------------------------- */
-        document.addEventListener('DOMContentLoaded', async () => {
-            lucide.createIcons();
-            
-            // อ่านค่า Role จาก URL (เช่น ?role=evaluator)
-            const urlParams = new URLSearchParams(window.location.search);
-            currentUserRole = urlParams.get('role') === 'evaluator' ? 'EVALUATOR' : 'OWNER';
-            
-            await fetchInitialData();
-            setupUIForRole();
-        });
-
-        /* -------------------------------------------------------------
-           3.3 ฟังก์ชันติดต่อ API (Fetch)
-           ------------------------------------------------------------- */
-        async function fetchInitialData() {
-            Swal.fire({ title: 'กำลังโหลดข้อมูล...', didOpen: () => Swal.showLoading(), allowOutsideClick: false });
-            try {
-                const res = await fetch(`${GAS_WEB_APP_URL}?action=getInitialData`);
-                const result = await res.json();
-                if (result.status === 'success') { DB = result.data; Swal.close(); }
-            } catch (e) {
-                Swal.fire('Error', 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้', 'error');
-            }
-        }
-
-        async function apiPostCall(action, payload) {
-            try {
-                const res = await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ action: action, data: payload })
-                });
-                return await res.json();
-            } catch (e) {
-                return { status: 'error', message: 'Network Error' };
-            }
-        }
-
-        /* -------------------------------------------------------------
-           3.4 ฟังก์ชันจัดการ UI และ Navigation
-           ------------------------------------------------------------- */
-        function setupUIForRole() {
-            const isOwner = currentUserRole === 'OWNER';
-            document.getElementById('userRoleDisplay').innerText = isOwner ? 'ผู้รับการประเมิน' : 'หัวหน้าผู้ประเมิน';
-            
-            const badge = document.getElementById('roleBadge');
-            badge.innerHTML = isOwner ? 'โหมดผู้รับการประเมิน' : 'โหมดหัวหน้า (ผู้ประเมิน)';
-            badge.className = isOwner ? 'px-3 py-1.5 rounded-lg border font-bold text-sm hidden md:block border-blue-200 bg-blue-50 text-royal-blue' 
-                                      : 'px-3 py-1.5 rounded-lg border font-bold text-sm hidden md:block border-orange-200 bg-orange-50 text-brand-orange';
-            
-            document.getElementById('nav-evidence').classList.toggle('hidden', !isOwner);
-            document.getElementById('nav-evidence').classList.toggle('flex', isOwner);
-            document.getElementById('nav-evaluate').classList.toggle('hidden', isOwner);
-            document.getElementById('nav-evaluate').classList.toggle('flex', !isOwner);
-            
-            navigate('dashboard');
-        }
-
-        function navigate(viewId) {
-            document.querySelectorAll('#mainContent > div').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            
-            if(viewId === 'dashboard') renderDashboard();
-            if(viewId === 'categories') renderCategoriesView();
-            if(viewId === 'evidence') renderEvidenceTable();
-            if(viewId === 'evaluate') renderEvaluatorList();
-        }
-
-        function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            sb.classList.toggle('hidden'); sb.classList.toggle('flex');
-            document.getElementById('sidebarOverlay').classList.toggle('hidden');
-        }
-
-        function showLinkModal() {
-            const baseUrl = window.location.href.split('?')[0];
-            document.getElementById('linkOwnerDisplay').innerText = baseUrl + '?role=owner';
-            document.getElementById('linkEvaluatorDisplay').innerText = baseUrl + '?role=evaluator';
-            document.getElementById('linkModal').classList.remove('hidden');
-        }
-
-        /* -------------------------------------------------------------
-           3.5 ฟังก์ชัน Render ข้อมูล (Dashboard & Categories)
-           ------------------------------------------------------------- */
-        function renderDashboard() {
-            const totalInd = DB.indicators.length;
-            const indWithEv = new Set(DB.evidences.flatMap(e => e.indicators)).size;
-            
-            document.getElementById('dashEvidenceCount').innerText = `${indWithEv}/${totalInd}`;
-            document.getElementById('dashEvidencePercent').innerText = totalInd ? Math.round((indWithEv/totalInd)*100) + '%' : '0%';
-
-            const container = document.getElementById('categoryCardsContainer');
-            container.innerHTML = '';
-            
-            DB.categories.forEach(cat => {
-                const tasksInCat = DB.tasks.filter(t => t.catId === cat.id);
-                const taskIds = tasksInCat.map(t => t.id);
-                const indInCat = DB.indicators.filter(i => taskIds.includes(i.taskId));
-                
-                let evCount = indInCat.filter(i => DB.evidences.some(e => e.indicators.includes(i.id))).length;
-                const prog = indInCat.length ? Math.round((evCount / indInCat.length) * 100) : 0;
-                
-                container.innerHTML += `
-                    <div class="bg-white rounded-2xl border p-6">
-                        <h4 class="text-xl font-bold ${cat.textClass} mb-4">${cat.title} <span class="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded ml-2">น้ำหนัก ${cat.weight}%</span></h4>
-                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-2"><div class="bg-brand-orange h-2.5 rounded-full" style="width:${prog}%"></div></div>
-                        <p class="text-sm text-gray-500 text-right">${prog}% Complete</p>
-                    </div>
-                `;
-            });
-        }
-
-        function renderCategoriesView() {
-            const container = document.getElementById('taskDetailsContainer');
-            container.innerHTML = '';
-
-            DB.categories.forEach(cat => {
-                let html = `<div class="mb-8"><h3 class="text-xl font-bold bg-deep-navy text-white p-4 rounded-t-xl">${cat.title}</h3><div class="bg-white border p-4 rounded-b-xl">`;
-                
-                DB.tasks.filter(t => t.catId === cat.id).forEach(task => {
-                    html += `<div class="font-bold text-lg text-text-main mt-4 mb-2 pl-2 border-l-4 border-royal-blue">${task.title}</div>`;
-                    
-                    DB.indicators.filter(i => i.taskId === task.id).forEach(ind => {
-                        const evs = DB.evidences.filter(e => e.indicators.includes(ind.id));
-                        html += `
-                            <div class="p-3 bg-gray-50 border rounded-lg mb-2 flex justify-between items-center cursor-pointer hover:border-royal-blue" onclick="document.getElementById('acc-${ind.id}').classList.toggle('open')">
-                                <div><span class="font-bold text-royal-blue">${ind.code} ${ind.title}</span> (น้ำหนัก ${ind.weight})</div>
-                                <div class="text-sm bg-white px-2 border rounded">${evs.length} หลักฐาน</div>
-                            </div>
-                            <div id="acc-${ind.id}" class="accordion-content bg-white border border-t-0 -mt-3 mb-2 rounded-b-lg px-4"><br>
-                                <p class="text-sm text-gray-600 mb-2"><b>รายการหลักฐาน:</b></p>
-                                ${evs.map(e => `<a href="${e.url}" target="_blank" class="block text-sm text-royal-blue mb-1">🔗 ${e.title}</a>`).join('') || '<span class="text-sm text-gray-400">- ไม่มี -</span>'}
-                                <br><br>
-                            </div>
-                        `;
-                    });
-                });
-                container.innerHTML += html + '</div></div>';
-            });
-        }
-
-        /* -------------------------------------------------------------
-           3.6 ฟังก์ชันจัดการหลักฐาน (Evidence CRUD)
-           ------------------------------------------------------------- */
-        function renderEvidenceTable() {
-            const tbody = document.getElementById('evidenceTableBody');
-            tbody.innerHTML = DB.evidences.map(e => `
-                <tr class="border-b">
-                    <td class="p-3">${e.title}</td><td class="p-3">${e.type}</td><td class="p-3">${e.indicators.join(', ')}</td>
-                    <td class="p-3 text-center"><button onclick="deleteEvidence('${e.id}')" class="text-red-500 hover:bg-red-50 px-2 py-1 rounded">ลบ</button></td>
-                </tr>
-            `).join('') || '<tr><td colspan="4" class="text-center p-4">ไม่มีหลักฐาน</td></tr>';
-        }
-
-        function openEvidenceModal() {
-            document.getElementById('evTitle').value = '';
-            document.getElementById('evUrl').value = '';
-            
-            const list = document.getElementById('evIndicatorsList');
-            list.innerHTML = DB.indicators.map(i => `
-                <label class="block p-1 hover:bg-white"><input type="checkbox" value="${i.id}" class="ev-check"> ${i.code} ${i.title}</label>
-            `).join('');
-            
-            document.getElementById('evidenceModal').classList.remove('hidden');
-        }
-
-        function closeEvidenceModal() { document.getElementById('evidenceModal').classList.add('hidden'); }
-
-        async function saveEvidence() {
-            const payload = {
-                id: 'EV_' + Date.now(), title: document.getElementById('evTitle').value,
-                type: document.getElementById('evType').value, url: document.getElementById('evUrl').value,
-                date: new Date().toISOString().split('T')[0],
-                indicators: Array.from(document.querySelectorAll('.ev-check:checked')).map(c => c.value)
-            };
-            if(!payload.title || !payload.url || !payload.indicators.length) return Swal.fire('เตือน', 'กรอกข้อมูลไม่ครบ', 'warning');
-            
-            closeEvidenceModal(); Swal.fire({title:'บันทึก...', didOpen:()=>Swal.showLoading()});
-            const res = await apiPostCall('saveEvidence', payload);
-            if(res.status === 'success') { DB.evidences.push(payload); Swal.close(); renderEvidenceTable(); }
-        }
-
-        async function deleteEvidence(id) {
-            if(confirm('ต้องการลบหลักฐานนี้หรือไม่?')) {
-                Swal.fire({title:'ลบ...', didOpen:()=>Swal.showLoading()});
-                const res = await apiPostCall('deleteEvidence', {id: id});
-                if(res.status === 'success') { 
-                    DB.evidences = DB.evidences.filter(e => e.id !== id); 
-                    Swal.close(); renderEvidenceTable(); 
-                }
-            }
-        }
-
-        /* -------------------------------------------------------------
-           3.7 ฟังก์ชันประเมินคะแนน (Evaluator Logic)
-           ------------------------------------------------------------- */
-        let currentEvalId = null;
-
-        function renderEvaluatorList() {
-            document.getElementById('evaluatorListContainer').innerHTML = DB.indicators.map(ind => {
-                const evs = DB.evidences.filter(e => e.indicators.includes(ind.id));
-                const evScore = DB.evaluations[ind.id];
-                return `
-                    <div class="border p-4 rounded-xl flex justify-between items-center mb-3">
-                        <div><b>${ind.code} ${ind.title}</b><p class="text-sm">หลักฐาน ${evs.length} รายการ</p></div>
-                        <button onclick="openEvaluateModal('${ind.id}')" class="bg-royal-blue text-white px-4 py-2 rounded-lg">
-                            ${evScore ? 'คะแนน: ' + evScore.score : 'ให้คะแนน'}
-                        </button>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function openEvaluateModal(id) {
-            currentEvalId = id;
-            const ind = DB.indicators.find(i => i.id === id);
-            document.getElementById('evalIndicatorName').innerText = ind.title;
-            
-            document.querySelectorAll('.score-btn').forEach(b => {
-                b.classList.remove('bg-orange-100','border-brand-orange');
-                b.onclick = () => {
-                    document.querySelectorAll('.score-btn').forEach(btn => btn.classList.remove('bg-orange-100','border-brand-orange'));
-                    b.classList.add('bg-orange-100','border-brand-orange');
-                    document.getElementById('selectedScore').value = b.getAttribute('data-score');
-                }
-            });
-            document.getElementById('evaluateModal').classList.remove('hidden');
-        }
-
-        function closeEvaluateModal() { document.getElementById('evaluateModal').classList.add('hidden'); }
-
-        async function saveEvaluation() {
-            const score = document.getElementById('selectedScore').value;
-            if(score == "0") return alert("กรุณาเลือกคะแนน");
-            
-            closeEvaluateModal(); Swal.fire({title:'บันทึกคะแนน...', didOpen:()=>Swal.showLoading()});
-            const payload = { indicatorId: currentEvalId, score: parseInt(score), comment: document.getElementById('evalComment').value };
-            
-            const res = await apiPostCall('saveEvaluation', payload);
-            if(res.status === 'success') { DB.evaluations[currentEvalId] = payload; Swal.close(); renderEvaluatorList(); }
-        }
-    </script>
-</body>
-</html>
+<!-- เรียกใช้ไฟล์ JavaScript ที่แยกออกไป -->
+<script src="script.js"></script>
