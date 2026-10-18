@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปหลักฐานประเมิน IPA 2569</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Prompt for Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f4f4f9;
+            /* Premium soft gradient background */
+            background-image: 
+                radial-gradient(at 10% 10%, hsla(220, 100%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, hsla(280, 100%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 90%, hsla(350, 100%, 95%, 1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #334155;
+        }
+
+        /* View Transitions (SPA) */
+        .app-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .app-view.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Premium Glassmorphism Cards */
+        .premium-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .menu-card {
+            cursor: pointer;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Sub-list Links */
+        .list-link {
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .list-link:hover {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05);
+            transform: translateX(4px);
+        }
+
+        /* Progress Bar Animation */
+        .progress-bar-fill {
+            transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+    <div id="app" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen flex flex-col">
+        
+        <!-- Global Header (Premium Style) -->
+        <header class="premium-card p-6 md:p-8 mb-10 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <!-- Decorative blur element -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+            
+            <div class="flex items-center gap-5 z-10 w-full">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg shrink-0">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
+                <div class="flex-grow">
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">สรุปหลักฐานประเมิน IPA 2569</h1>
+                    <p class="text-slate-500 mt-1 flex flex-wrap items-center gap-2 text-sm md:text-base font-medium">
+                        นางสาวณัฏฌานันท์ พุ่มระกำ <span class="hidden sm:inline w-1.5 h-1.5 rounded-full bg-slate-300"></span> 
+                        <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md text-xs sm:text-sm">ตำแหน่ง บรรณารักษ์</span>
+                    </p>
+                </div>
+                <!-- Dynamic Back button placeholder for desktop -->
+                <div id="header-actions" class="hidden md:block shrink-0"></div>
+            </div>
+            <!-- Dynamic Back button placeholder for mobile -->
+            <div id="header-actions-mobile" class="w-full md:hidden flex justify-start z-10"></div>
+        </header>
+
+        <main class="flex-grow">
+            <!-- 1. Home View (Category Selection) -->
+            <div id="view-home" class="app-view active">
+                <h2 class="text-lg font-semibold mb-6 text-slate-600 pl-2 border-l-4 border-indigo-500">
+                    กรุณาเลือกประเภทของข้อมูล
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card 1 -->
+                    <div onclick="switchView('view-cat1')" class="premium-card menu-card p-6 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800">1. งานยุทธศาสตร์</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">ข้อมูลที่เกี่ยวข้องกับยุทธศาสตร์ แผนงาน และความพึงพอใจ</p>
+                        <div class="flex items-center text-sm font-semibold text-indigo-600 group-hover:text-indigo-700">
+                            เข้าสู่เมนู <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="switchView('view-cat2')" class="premium-card menu-card p-6 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800">2. งานประจำ</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">สื่อประชาสัมพันธ์ ถ่ายภาพ วิดีโอ และงานบริการทั่วไป</p>
+                        <div class="flex items-center text-sm font-semibold text-teal-600 group-hover:text-teal-700">
+                            เข้าสู่เมนู <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="switchView('view-cat3')" class="premium-card menu-card p-6 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800">3. งานที่ได้รับมอบหมาย</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">การพัฒนาระบบ คู่มือปฏิบัติงาน และการอบรมต่างๆ</p>
+                        <div class="flex items-center text-sm font-semibold text-orange-600 group-hover:text-orange-700">
+                            เข้าสู่เมนู <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div onclick="switchView('view-cat4')" class="premium-card menu-card p-6 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800">4. งานที่มีส่วนร่วม</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">การเข้าร่วมกิจกรรมทั้งภายในและภายนอกองค์กร</p>
+                        <div class="flex items-center text-sm font-semibold text-pink-600 group-hover:text-pink-700">
+                            เข้าสู่เมนู <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Category 1 -->
+            <div id="view-cat1" class="app-view">
+                <div class="premium-card overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-indigo-100/50">
+                        <h2 class="text-xl font-bold text-indigo-900 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm shadow-sm">1</span>
+                            หมวดหมู่: งานยุทธศาสตร์
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <!-- Dashboard Button -->
+                        <button onclick="switchView('view-dashboard')" class="list-link w-full text-left bg-slate-50/50 p-5 rounded-2xl flex items-center justify-between group">
+                            <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
+                                <div class="w-12 h-12 rounded-xl bg-white shadow-sm text-indigo-500 flex items-center justify-center shrink-0 border border-slate-100">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold tracking-wider text-indigo-500 mb-1 uppercase">ข้อ 1.1</p>
+                                    <h4 class="text-base font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">การสร้างความพึงพอใจให้กับผู้ที่มาใช้บริการ (การให้ความสำคัญกับลูกค้า)</h4>
+                                </div>
+                            </div>
+                            <span class="hidden sm:inline-block bg-indigo-100 text-indigo-700 text-xs font-bold px-4 py-2 rounded-full shrink-0">เปิด Dashboard สรุปผล</span>
+                        </button>
+                        
+                        <!-- Drive Link -->
+                        <a href="https://drive.google.com/drive/folders/1OnIKdBBZTf4kkoTeZIKNPVyS9IxoX8-_?usp=sharing" target="_blank" class="list-link block bg-slate-50/50 p-5 rounded-2xl flex items-center justify-between group">
+                            <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
+                                <div class="w-12 h-12 rounded-xl bg-white shadow-sm text-blue-500 flex items-center justify-center shrink-0 border border-slate-100">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold tracking-wider text-blue-500 mb-1 uppercase">ข้อ 1.2</p>
+                                    <h4 class="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">การจัดทำโครงร่างวิจัยจากงานประจำสู่งานวิจัย (R2R)</h4>
+                                </div>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Category 2 -->
+            <div id="view-cat2" class="app-view">
+                <div class="premium-card overflow-hidden">
+                    <div class="bg-gradient-to-r from-teal-50 to-emerald-50 p-6 border-b border-teal-100/50">
+                        <h2 class="text-xl font-bold text-teal-900 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-teal-500 text-white flex items-center justify-center text-sm shadow-sm">2</span>
+                            หมวดหมู่: งานประจำ
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <script>
+                            const cat2Data = [
+                                {id: '2.1', title: 'การผลิตสื่อประชาสัมพันธ์ภารกิจของห้องสมุดและหน่วยงาน', link: 'https://drive.google.com/drive/folders/10yIoVlP_4t_52AphM89Pdb_nImhu_Dqw?usp=drive_link'},
+                                {id: '2.2', title: 'การถ่ายภาพนิ่งสำหรับกิจกรรม/โครงการ/อบรมหน่วยงาน', link: 'https://drive.google.com/drive/folders/1rJ8X8JELRvsHHN2HK0wsgDPHs-7xH0Om?usp=drive_link'},
+                                {id: '2.3', title: 'การผลิตสื่อวิดีโอ', link: 'https://drive.google.com/drive/folders/1wUIe-pQmsnwS7DwZK5MYc6Ya1-CGtz0e?usp=sharing'},
+                                {id: '2.4', title: 'การติดตั้งโปรแกรมสำเร็จรูป และการแก้ไขปัญหา (SPSS EndNote)', link: 'https://drive.google.com/drive/folders/1cV29bwcEeQKzBp8RXJs56brOpRNH9PQR?usp=sharing'},
+                                {id: '2.5', title: 'การดูแลและบริหารจัดการสื่อสังคมออนไลน์', link: 'https://drive.google.com/drive/folders/1EepZngLDk4gCLf-e0gkZ6z-3eg647s90?usp=drive_link'}
+                            ];
+                            document.write(cat2Data.map(item => `
+                                <a href="${item.link}" target="_blank" class="list-link block bg-slate-50/50 p-5 rounded-2xl flex items-center justify-between group">
+                                    <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
+                                        <div class="w-12 h-12 rounded-xl bg-white shadow-sm text-teal-600 flex items-center justify-center shrink-0 border border-slate-100 font-bold font-mono text-sm">${item.id}</div>
+                                        <div><h4 class="text-base font-semibold text-slate-800 group-hover:text-teal-600 transition-colors">${item.title}</h4></div>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-400 group-hover:text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </a>
+                            `).join(''));
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Category 3 -->
+            <div id="view-cat3" class="app-view">
+                <div class="premium-card overflow-hidden">
+                    <div class="bg-gradient-to-r from-orange-50 to-amber-50 p-6 border-b border-orange-100/50">
+                        <h2 class="text-xl font-bold text-orange-900 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center text-sm shadow-sm">3</span>
+                            หมวดหมู่: งานที่ได้รับมอบหมาย
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <script>
+                            const cat3Data = [
+                                {id: '3.1', title: 'การปฏิบัติหน้าที่ตามที่ได้รับมอบหมายพิเศษจากผู้บังคับบัญชา', link: 'https://drive.google.com/drive/folders/1igSuieCLXmL3X_lOtjniyRvm9N-LqeRk?usp=sharing'},
+                                {id: '3.2', title: 'การพัฒนาระบบหรือกระบวนการสนับสนุนการปฏิบัติงาน', link: 'https://drive.google.com/drive/folders/1K2k8HFei4q_XUwyPy48Gb-KcMMOccWQ2?usp=drive_link'},
+                                {id: '3.3', title: 'การจัดทำคู่มือการปฏิบัติงาน หรือคู่มือการให้บริการ', link: 'https://drive.google.com/drive/folders/1rpKOzNDFUU5_hGceSLeWvGkHfItTn7Tw?usp=drive_link'},
+                                {id: '3.4', title: 'การฝึกอบรมเพิ่มพูนความรู้ ทักษะการทำงาน', link: 'https://drive.google.com/drive/folders/1-ylPdEpNaqwJAGdQczqr3L95Z_HB7YMf?usp=drive_link'},
+                                {id: '3.5', title: 'แบบประเมินพฤติกรรมรายบุคคล', link: 'https://drive.google.com/drive/folders/165L4nfox3KDPlyA6OECC9WZs1iZgOu4X?usp=drive_link'}
+                            ];
+                            document.write(cat3Data.map(item => `
+                                <a href="${item.link}" target="_blank" class="list-link block bg-slate-50/50 p-5 rounded-2xl flex items-center justify-between group">
+                                    <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
+                                        <div class="w-12 h-12 rounded-xl bg-white shadow-sm text-orange-600 flex items-center justify-center shrink-0 border border-slate-100 font-bold font-mono text-sm">${item.id}</div>
+                                        <div><h4 class="text-base font-semibold text-slate-800 group-hover:text-orange-600 transition-colors">${item.title}</h4></div>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-400 group-hover:text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </a>
+                            `).join(''));
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Category 4 -->
+            <div id="view-cat4" class="app-view">
+                <div class="premium-card overflow-hidden">
+                    <div class="bg-gradient-to-r from-pink-50 to-rose-50 p-6 border-b border-pink-100/50">
+                        <h2 class="text-xl font-bold text-pink-900 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center text-sm shadow-sm">4</span>
+                            หมวดหมู่: งานที่มีส่วนร่วม
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <a href="https://drive.google.com/drive/folders/1jKfrTMG8N6DYpoJk3UYgTLrHQgKLiSbJ?usp=sharing" target="_blank" class="list-link block bg-slate-50/50 p-5 rounded-2xl flex items-center justify-between group">
+                            <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
+                                <div class="w-12 h-12 rounded-xl bg-white shadow-sm text-pink-600 flex items-center justify-center shrink-0 border border-slate-100 font-bold font-mono text-sm">4.1</div>
+                                <div><h4 class="text-base font-semibold text-slate-800 group-hover:text-pink-600 transition-colors">การเข้าร่วมกิจกรรมภายใน ภายนอกราชวิทยาลัยจุฬาภรณ์</h4></div>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-pink-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Dashboard View (Data Visualization) -->
+            <div id="view-dashboard" class="app-view">
+                
+                <!-- Notification / KPI Info -->
+                <div class="bg-indigo-50/80 backdrop-blur-md border border-indigo-100/60 rounded-3xl p-6 mb-8 flex items-start gap-4">
+                    <div class="p-3 bg-white text-indigo-500 rounded-xl shrink-0 shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-indigo-900 text-lg mb-2">มาตรฐานชี้วัดการประเมิน</h3>
+                        <ul class="text-sm text-indigo-800/80 space-y-2 font-medium">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400"></div> มาตรฐานความถูกต้อง และการแก้ปัญหาเฉพาะหน้า</li>
+                            <li class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5"></div> <div>คะแนนเฉลี่ยความพึงพอใจของผู้ที่มาใช้บริการ <br><span class="text-xs text-indigo-500/80 font-normal">(วัดจากแบบประเมินความพึงพอใจต่อการมาใช้บริการของห้องสมุดราชวิทยาลัยจุฬาภรณ์)</span></div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Loader -->
+                <div id="dashboard-loader" class="flex flex-col items-center justify-center py-24 premium-card">
+                    <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
+                    <p class="text-slate-500 font-medium">กำลังโหลดข้อมูลและคำนวณผล...</p>
+                    <p id="api-notice" class="text-xs text-rose-400 mt-2 hidden">*แสดงข้อมูลจำลอง (Mock Data) เนื่องจากยังไม่ได้เชื่อมต่อ Google Sheet</p>
+                </div>
+
+                <!-- Content Area -->
+                <div id="dashboard-content" class="hidden space-y-8">
+                    
+                    <!-- Stats Overview (Demographics summary) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-overview">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <h2 class="text-xl font-bold text-slate-800 mt-10 mb-6 pl-2 border-l-4 border-blue-500">ผลการประเมินตามประเภทบริการ</h2>
+
+                    <!-- Service 1: Photo -->
+                    <div class="premium-card p-6 md:p-8">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path></svg></div>
+                            <h3 class="text-lg font-bold text-slate-800">1. บริการถ่ายภาพ/บันทึกวิดีโอ/ผลิตสื่อ</h3>
+                            <span class="ml-auto bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full" id="count-photo">0 คน</span>
+                        </div>
+                        <div id="list-photo" class="space-y-5"></div>
+                    </div>
+
+                    <!-- Service 2: Studio -->
+                    <div class="premium-card p-6 md:p-8">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
+                            <h3 class="text-lg font-bold text-slate-800">2. บริการห้องสตูดิโอ (GreenStudio)</h3>
+                            <span class="ml-auto bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full" id="count-studio">0 คน</span>
+                        </div>
+                        <div id="list-studio" class="space-y-5"></div>
+                    </div>
+
+                    <!-- Service 3: Equipment -->
+                    <div class="premium-card p-6 md:p-8">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+                            <h3 class="text-lg font-bold text-slate-800">3. บริการอุปกรณ์โสตทัศนูปกรณ์</h3>
+                            <span class="ml-auto bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full" id="count-equip">0 คน</span>
+                        </div>
+                        <div id="list-equip" class="space-y-5"></div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. Router / Navigation ---
+        let currentView = 'view-home';
+        
+        function switchView(targetViewId) {
+            if(currentView === targetViewId) return;
+            
+            // Fade out current
+            const currentEl = document.getElementById(currentView);
+            currentEl.style.opacity = '0';
+            currentEl.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                currentEl.classList.remove('active');
+                currentEl.style = ''; // reset inline styles
+                
+                // Show new
+                document.getElementById(targetViewId).classList.add('active');
+                currentView = targetViewId;
+                updateHeaderActions(targetViewId);
+
+                // Fetch Dashboard Data if needed
+                if(targetViewId === 'view-dashboard' && !window.dashboardLoaded) {
+                    fetchAndRenderDashboard();
+                }
+            }, 300); // match CSS transition duration
+        }
+
+        function updateHeaderActions(viewId) {
+            const containerDesk = document.getElementById('header-actions');
+            const containerMob = document.getElementById('header-actions-mobile');
+            
+            if (viewId === 'view-home') {
+                containerDesk.innerHTML = '';
+                containerMob.innerHTML = '';
+            } else {
+                let backTarget = 'view-home';
+                if (viewId === 'view-dashboard') backTarget = 'view-cat1'; 
+
+                const btnHtml = `
+                    <button onclick="switchView('${backTarget}')" class="flex items-center gap-2 px-4 py-2 bg-white/50 hover:bg-white text-slate-600 rounded-xl transition-all font-medium text-sm border border-slate-200/50 shadow-sm backdrop-blur-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        ย้อนกลับ
+                    </button>
+                `;
+                containerDesk.innerHTML = btnHtml;
+                containerMob.innerHTML = btnHtml;
+            }
+        }
+
+        // --- 2. Dashboard Data logic ---
+        // ⚠️ นำ Web App URL ที่ได้จาก Google Apps Script มาใส่ในเครื่องหมายคำพูดด้านล่างนี้ ⚠️
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz-lw6mwGONQhs3k6wNfWXVfiL-WbWB6aFpifm7Mo4dXyuuJMFdlfJ3qfcifs_B1vEx/exec"; 
+
+        async function fetchAndRenderDashboard() {
+            const loader = document.getElementById('dashboard-loader');
+            const content = document.getElementById('dashboard-content');
+            const apiNotice = document.getElementById('api-notice');
+
+            try {
+                if(!WEB_APP_URL) throw new Error("No URL");
+                
+                const response = await fetch(WEB_APP_URL);
+                const result = await response.json();
+                
+                if(result.status === 'success') {
+                    renderDashboard(result.data);
+                } else {
+                    throw new Error("API Error");
+                }
+            } catch (error) {
+                // Fallback to Mock Data if no URL or error
+                apiNotice.classList.remove('hidden');
+                setTimeout(() => {
+                    renderDashboard(getMockData());
+                    loader.style.display = 'none';
+                    content.classList.remove('hidden');
+                    // Animate progress bars after slight delay
+                    setTimeout(animateProgressBars, 100);
+                    window.dashboardLoaded = true;
+                }, 1500);
+                return;
+            }
+
+            loader.style.display = 'none';
+            content.classList.remove('hidden');
+            setTimeout(animateProgressBars, 100);
+            window.dashboardLoaded = true;
+        }
+
+        function renderDashboard(data) {
+            // --- Overview Stats ---
+            const userTypesHtml = Object.keys(data.demographics.userType).map(k => `<div class="flex justify-between text-sm"><span class="text-slate-500">${k}</span><span class="font-semibold text-slate-700">${data.demographics.userType[k]} คน</span></div>`).join('');
+            
+            // --- Service Types (Multiple Choice Support) ---
+            const totalPeople = data.total;
+            const serviceTypesHtml = Object.keys(data.demographics.serviceType).map(k => {
+                const count = data.demographics.serviceType[k];
+                const pct = totalPeople > 0 ? ((count / totalPeople) * 100).toFixed(1) : 0;
+                return `
+                    <div class="mb-3 last:mb-0">
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="text-sm font-medium text-slate-600 pr-2">${k}</span>
+                            <span class="text-sm font-bold text-indigo-600 shrink-0">${count} คน <span class="text-xs font-medium text-slate-400">(${pct}%)</span></span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div class="progress-bar-fill h-full rounded-full bg-gradient-to-r from-indigo-400 to-purple-500" style="width: 0%" data-width="${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('stats-overview').innerHTML = `
+                <div class="premium-card p-6 flex flex-col justify-center items-center text-center">
+                    <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-2">จำนวนผู้ตอบแบบประเมิน</p>
+                    <h3 class="text-5xl font-bold text-indigo-600">${data.total}</h3>
+                    <p class="text-slate-400 text-sm mt-2">คน</p>
+                </div>
+                <div class="premium-card p-6">
+                    <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">สัดส่วนเพศ</p>
+                    <div class="space-y-3">
+                        ${Object.keys(data.demographics.gender).map(k => `
+                            <div class="flex items-center justify-between">
+                                <span class="text-slate-600 font-medium">${k}</span>
+                                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded-lg text-sm font-semibold">${data.demographics.gender[k]} คน</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="premium-card p-6">
+                    <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">ประเภทผู้รับบริการ</p>
+                    <div class="space-y-2">
+                        ${userTypesHtml}
+                    </div>
+                </div>
+                <!-- การ์ดใหม่: รูปแบบการใช้บริการที่ขยายเต็มความกว้าง -->
+                <div class="premium-card p-6 md:col-span-3">
+                    <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">รูปแบบการใช้บริการ (ผู้ใช้สามารถเลือกได้มากกว่า 1 ข้อ)</p>
+                    <div class="space-y-4">
+                        ${serviceTypesHtml}
+                    </div>
+                </div>
+            `;
+
+            // --- Function to build Progress Bar Item ---
+            const buildBarItem = (label, score, colorClass, gradientClass) => {
+                const pct = ((score / 5) * 100).toFixed(1);
+                return `
+                    <div class="flex flex-col gap-2">
+                        <div class="flex justify-between items-end">
+                            <span class="text-sm font-medium text-slate-600 pr-4">${label}</span>
+                            <div class="flex items-baseline gap-2 shrink-0">
+                                <span class="text-lg font-bold ${colorClass}">${score.toFixed(2)}</span>
+                                <span class="text-xs font-semibold text-slate-400">/ 5.00 (${pct}%)</span>
+                            </div>
+                        </div>
+                        <div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div class="progress-bar-fill h-full rounded-full ${gradientClass}" style="width: 0%" data-width="${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Setup Labels
+            const pLabels = ['การติดต่อประสานงานสะดวก รวดเร็ว', 'ความรวดเร็วเป็นไปตามเวลาที่กำหนด', 'ขั้นตอนชัดเจน ไม่ซับซ้อน', 'เจ้าหน้าที่สุภาพ ยิ้มแย้มแจ่มใส', 'ให้บริการเท่าเทียม ไม่เลือกปฏิบัติ', 'ให้คำปรึกษาและตอบข้อซักถามชัดเจน', 'คุณภาพของผลงาน', 'ความพึงพอใจโดยรวมในทุกด้าน'];
+            const sLabels = ['การติดต่อประสานงานสะดวก รวดเร็ว', 'ความรวดเร็วเป็นไปตามเวลาที่กำหนด', 'ขั้นตอนชัดเจน ไม่ซับซ้อน', 'เจ้าหน้าที่สุภาพ ยิ้มแย้มแจ่มใส', 'ให้บริการเท่าเทียม ไม่เลือกปฏิบัติ', 'ให้คำปรึกษาและตอบข้อซักถามชัดเจน', 'สถานที่สะอาด เป็นระเบียบเรียบร้อย', 'วัสดุอุปกรณ์สภาพเรียบร้อย พร้อมใช้งาน', 'ความพึงพอใจโดยรวมในทุกด้าน'];
+            const eLabels = ['การติดต่อประสานงานสะดวก รวดเร็ว', 'ความรวดเร็วเป็นไปตามเวลาที่กำหนด', 'ขั้นตอนชัดเจน ไม่ซับซ้อน', 'เจ้าหน้าที่สุภาพ ยิ้มแย้มแจ่มใส', 'ให้บริการเท่าเทียม ไม่เลือกปฏิบัติ', 'ให้คำปรึกษาและตอบข้อซักถามชัดเจน', 'วัสดุอุปกรณ์สภาพเรียบร้อย พร้อมใช้งาน', 'วัสดุอุปกรณ์สะอาด', 'มีเจ้าหน้าที่แนะนำการใช้อุปกรณ์', 'ความพึงพอใจโดยรวมในทุกด้าน'];
+
+            // Render Lists
+            document.getElementById('count-photo').innerText = `ผู้รับบริการ ${data.averages.photo.count} คน`;
+            document.getElementById('list-photo').innerHTML = data.averages.photo.scores.map((score, i) => 
+                buildBarItem(pLabels[i], score, 'text-blue-600', 'bg-gradient-to-r from-blue-400 to-indigo-500')
+            ).join('');
+
+            document.getElementById('count-studio').innerText = `ผู้รับบริการ ${data.averages.studio.count} คน`;
+            document.getElementById('list-studio').innerHTML = data.averages.studio.scores.map((score, i) => 
+                buildBarItem(sLabels[i], score, 'text-teal-600', 'bg-gradient-to-r from-teal-400 to-emerald-500')
+            ).join('');
+
+            document.getElementById('count-equip').innerText = `ผู้รับบริการ ${data.averages.equip.count} คน`;
+            document.getElementById('list-equip').innerHTML = data.averages.equip.scores.map((score, i) => 
+                buildBarItem(eLabels[i], score, 'text-orange-600', 'bg-gradient-to-r from-orange-400 to-amber-500')
+            ).join('');
+        }
+
+        // Trigger CSS animation for bars
+        function animateProgressBars() {
+            const bars = document.querySelectorAll('.progress-bar-fill');
+            bars.forEach(bar => {
+                bar.style.width = bar.getAttribute('data-width');
+            });
+        }
+
+        // Mock Data Fallback
+        function getMockData() {
+            return {
+                total: 125,
+                demographics: {
+                    gender: { "ชาย": 55, "หญิง": 68, "ไม่ระบุ": 2 },
+                    userType: { "นักศึกษา": 80, "อาจารย์": 15, "บุคลากรสายสนับสนุน": 20, "บุคคลภายนอก": 10 },
+                    serviceType: { 
+                        "บริการถ่ายภาพ": 35,
+                        "บันทึกวิดีโอ": 25,
+                        "ผลิตสื่อภาพเคลื่อนไหว": 15,
+                        "อบรม": 18,
+                        "สัมมนา": 12,
+                        "ผลิตสื่อ": 20,
+                        "บริการห้องสตูดิโอ(GreenStudio)": 40, 
+                        "บริการอุปกรณ์โสตทัศนูปกรณ์": 60 
+                    }
+                },
+                averages: {
+                    photo: { count: 45, scores: [4.6, 4.3, 4.5, 4.9, 4.8, 4.7, 4.5, 4.6] },
+                    studio: { count: 40, scores: [4.7, 4.6, 4.5, 4.9, 4.8, 4.8, 4.9, 4.6, 4.7] },
+                    equip: { count: 60, scores: [4.4, 4.2, 4.3, 4.8, 4.7, 4.6, 4.5, 4.6, 4.9, 4.5] }
+                }
+            };
+        }
+    </script>
+</body>
+</html>
