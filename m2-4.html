@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หลักฐานประกอบการประเมิน การติดตั้งโปรแกรม (SPSS, EndNote)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Prompt for Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 90%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #334155;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            border-radius: 2rem;
+        }
+
+        .indent-text {
+            text-indent: 3rem;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-hover-zoom {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .image-container:hover .image-hover-zoom {
+            transform: scale(1.05);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased py-12 px-4 sm:px-6 lg:px-8 selection:bg-blue-200 selection:text-blue-900 min-h-screen flex flex-col items-center">
+
+    <!-- Background Animated Blobs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-blue-400/20 blur-[100px] mix-blend-multiply animate-pulse"></div>
+        <div class="absolute top-[40%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-emerald-400/20 blur-[100px] mix-blend-multiply animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <div class="w-full max-w-5xl mx-auto relative z-10">
+        <!-- ปุ่มย้อนกลับ -->
+        <div class="fade-in-up mb-8 flex justify-start">
+            <a href="natchanan.html" class="inline-flex items-center gap-3 px-6 py-3 bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 text-slate-600 rounded-2xl transition-all font-bold text-sm shadow-sm hover:shadow-md group">
+                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500 transition-colors transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                กลับหน้าหลัก
+            </a>
+        </div>
+
+        <header class="text-center mb-16 fade-in-up delay-100">
+            <div class="inline-flex items-center justify-center p-4 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-50 mb-6 shadow-sm border border-blue-100">
+                <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">หลักฐานประกอบการประเมิน</h1>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gradient">การติดตั้งโปรแกรมสำเร็จรูป และการแก้ไขปัญหา<br><span class="text-xl md:text-2xl mt-2 block text-slate-500">(SPSS, EndNote)</span></h2>
+        </header>
+
+        <div class="glass-card p-6 md:p-10 mb-12 fade-in-up delay-200 relative overflow-hidden border-t-4 border-t-blue-400">
+            <p class="indent-text text-slate-700 text-lg md:text-xl leading-relaxed text-justify font-medium relative z-10">
+                ข้าพเจ้าได้ปฏิบัติหน้าที่ให้บริการทางเทคนิคในการติดตั้ง ตรวจสอบ และแก้ไขปัญหาการใช้งานโปรแกรมสนับสนุนการวิจัย (SPSS และ EndNote) ให้แก่เพื่อนร่วมงานและผู้รับบริการอย่างต่อเนื่อง โดยมุ่งเน้นคุณภาพการให้บริการและความสำเร็จในการแก้ไขปัญหา <strong class="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 whitespace-nowrap shadow-sm inline-flex items-center gap-2 mx-1">(Success Rate 100%)</strong> ทั้งการแก้ปัญหาเฉพาะหน้าและการทำงานเชิงรุก ดังนี้
+            </p>
+        </div>
+
+        <section class="glass-card p-8 md:p-12 mb-12 fade-in-up delay-300 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400 to-indigo-400 opacity-5 rounded-bl-full"></div>
+            
+            <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-8 flex items-center gap-4 relative z-10">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-xl shadow-lg shadow-blue-200 shrink-0 transform -rotate-6">
+                    <span class="font-black text-2xl">1</span>
+                </div>
+                <span class="leading-tight text-blue-800">การสนับสนุนและการช่วยเหลือเพื่อนร่วมงาน : <span class="text-indigo-600">โปรแกรม SPSS</span></span>
+            </h3>
+            
+            <div class="text-slate-700 text-lg md:text-xl leading-relaxed mb-8 relative z-10 font-medium space-y-6">
+                <p class="indent-text text-justify">
+                    เพื่อเป็นการยกระดับการให้บริการและช่วยให้เพื่อนร่วมงานสามารถแก้ปัญหาเบื้องต้นได้ด้วยตนเอง ข้าพเจ้าได้ดำเนินการรวบรวมปัญหาที่พบจากการปฏิบัติงานจริง และจัดทำ <strong class="text-blue-700 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100">"แนวทางการจัดการสถานการณ์ปัญหา (Troubleshooting)"</strong> สำหรับโปรแกรม SPSS ซึ่งครอบคลุมการแก้ไขปัญหาระบบ ได้แก่
+                </p>
+                
+                <ul class="space-y-4 pl-4 md:pl-12 my-6">
+                    <li class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center shrink-0 mt-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <span class="text-slate-700">การแก้ไขปัญหาระบบปฏิบัติการ (เช่น การอัปเกรด Windows Education, การอัปเดต Company Portal)</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center shrink-0 mt-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <span class="text-slate-700">การแก้ไขปัญหาการเชื่อมต่อระบบเครือข่าย (เช่น ปัญหาโปรแกรมไม่ปรากฏในระบบ MDM, การตั้งค่า IP Address เพื่อเชื่อมต่อ Commuter License)</span>
+                    </li>
+                </ul>
+
+                <p class="indent-text text-justify">
+                    ซึ่งแนวทางดังกล่าวช่วยลดระยะเวลาในการให้ความช่วยเหลือ และเพิ่มประสิทธิภาพในการทำงานของเพื่อนร่วมงานได้ นอกจากนี้ ข้าพเจ้ายังได้ให้คำแนะนำและช่วยเหลือเพื่อนร่วมงานในการแก้ปัญหาการติดตั้งและการใช้งานโปรแกรม SPSS ผ่านช่องทางแชทอย่างทันท่วงที จนผู้ใช้งานสามารถใช้งานโปรแกรมได้ตามปกติ 100%
+                </p>
+            </div>
+
+            <!-- รูปภาพประกอบ SPSS -->
+            <div class="relative z-10 space-y-6 mt-10">
+                
+                <!-- รูปที่ 1: Troubleshooting Guide -->
+                <div class="flex flex-col items-center">
+                    <div class="image-container rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-slate-50 group cursor-pointer relative max-w-4xl w-full">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-6">
+                            <span class="text-white font-bold text-lg flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                ขยายรูปภาพ
+                            </span>
+                        </div>
+                        <img src="https://drive.google.com/thumbnail?id=1gEXPlPeGlK6m-_S7sLWrv3A0I1_P6g_x&sz=w1200" alt="แนวทางการจัดการสถานการณ์ปัญหา SPSS" class="w-full h-auto object-cover image-hover-zoom">
+                    </div>
+                    <p class="text-slate-500 font-bold mt-3 text-center text-sm md:text-base">รูปภาพ: แนวทางการจัดการสถานการณ์ปัญหา SPSS</p>
+                </div>
+
+                <!-- รูปที่ 2,3,4: แชท SPSS เรียงเป็น Grid 3 คอลัมน์ -->
+                <div class="pt-6">
+                    <p class="text-slate-700 font-bold mb-4 text-center text-lg">ตัวอย่างหน้าจอแชทที่ให้คำแนะนำช่วยเหลือเพื่อนร่วมงาน (SPSS)</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="image-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-slate-100 group cursor-pointer relative aspect-[9/16] md:aspect-auto">
+                            <img src="https://drive.google.com/thumbnail?id=1s9tnw4KjAT2-KQwT3Z-X4I4t720DM2ma&sz=w800" alt="แชทช่วยเหลือ SPSS 1" class="w-full h-full object-cover image-hover-zoom">
+                        </div>
+                        <div class="image-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-slate-100 group cursor-pointer relative aspect-[9/16] md:aspect-auto">
+                            <img src="https://drive.google.com/thumbnail?id=1PEQDCl3RhHapiFQUjCWDOnhEsgNXHzhI&sz=w800" alt="แชทช่วยเหลือ SPSS 2" class="w-full h-full object-cover image-hover-zoom">
+                        </div>
+                        <div class="image-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-slate-100 group cursor-pointer relative aspect-[9/16] md:aspect-auto">
+                            <img src="https://drive.google.com/thumbnail?id=1B6CK3zRs80FNgmunxtZ3KgdyJ3ELraJf&sz=w800" alt="แชทช่วยเหลือ SPSS 3" class="w-full h-full object-cover image-hover-zoom">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="glass-card p-8 md:p-12 mb-20 fade-in-up delay-[400ms] relative overflow-hidden">
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-emerald-400 to-teal-400 opacity-5 rounded-tr-full"></div>
+
+            <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-8 flex items-center gap-4 relative z-10">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-200 shrink-0 transform rotate-6">
+                    <span class="font-black text-2xl">2</span>
+                </div>
+                <span class="leading-tight text-emerald-800">การแก้ไขปัญหาเชิงเทคนิค และการช่วยเหลือผู้รับบริการ : <span class="text-teal-600">โปรแกรม EndNote</span></span>
+            </h3>
+            
+            <div class="text-slate-700 text-lg md:text-xl leading-relaxed mb-10 relative z-10 font-medium space-y-6">
+                <p class="indent-text text-justify">
+                    ข้าพเจ้าได้ให้ความช่วยเหลือผู้รับบริการในกรณีที่พบข้อขัดข้องระหว่างการใช้งานโปรแกรม EndNote โดยเฉพาะปัญหาเชิงลึก เช่น กรณีระบบแจ้งเตือนข้อผิดพลาด <strong class="text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-100 text-base md:text-lg">"EndNote Output style specified in this document is not available in your styles folder"</strong> ซึ่งส่งผลกระทบต่อการจัดทำบรรณานุกรมในงานวิจัย
+                </p>
+                <p class="indent-text text-justify">
+                    ข้าพเจ้าได้ทำการวิเคราะห์สาเหตุและให้คำแนะนำขั้นตอนการแก้ไขปัญหา (Troubleshooting) ทีละขั้นตอน จนผู้รับบริการและเพื่อนร่วมงานสามารถดึง Output Style กลับมาใช้งานและดำเนินการเขียนงานวิจัยต่อไปได้สำเร็จ 100% โดยไม่เกิดความล่าช้า
+                </p>
+            </div>
+
+            <!-- รูปภาพประกอบ EndNote -->
+            <div class="relative z-10 pt-6">
+                <p class="text-slate-700 font-bold mb-4 text-center text-lg">ตัวอย่างหน้าจอแชทที่ให้คำแนะนำช่วยเหลือผู้รับบริการ (EndNote)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- รูปที่ 5 -->
+                    <div class="image-container rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-slate-50 group cursor-pointer relative aspect-[3/4] md:aspect-auto">
+                        <img src="https://drive.google.com/thumbnail?id=1DO_vQf4W3vcGUQ_HXD3QAT6KqGVqPJzQ&sz=w1000" alt="แชทช่วยเหลือ EndNote 1" class="w-full h-full object-cover image-hover-zoom">
+                    </div>
+                    <!-- รูปที่ 6 -->
+                    <div class="image-container rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-slate-50 group cursor-pointer relative aspect-[3/4] md:aspect-auto">
+                        <img src="https://drive.google.com/thumbnail?id=1uOQCM8IeLTGAoxwObk2UI5Xp4zoN4_DF&sz=w1000" alt="แชทช่วยเหลือ EndNote 2" class="w-full h-full object-cover image-hover-zoom">
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+    </div>
+
+    <!-- Image Modal (Lightbox) -->
+    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeModal()">
+        <button onclick="closeModal()" class="absolute top-6 right-6 md:top-10 md:right-10 text-white/70 hover:text-white transition-colors z-50 bg-black/50 hover:bg-black/80 rounded-full p-2 shadow-lg hover:scale-110 transform duration-200">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="w-full h-full p-4 md:p-12 relative flex justify-center items-center pointer-events-none">
+            <!-- ภาพจะถูกนำมาใส่ตรงนี้ พร้อมป้องกันการกดทะลุ -->
+            <img id="modalImage" src="" alt="ภาพขยายใหญ่" class="max-w-full max-h-full object-contain rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-300 pointer-events-auto" onclick="event.stopPropagation()">
+        </div>
+    </div>
+
+    <script>
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // ปรับพารามิเตอร์ของ Google Drive ให้ดึงภาพขนาดใหญ่ขึ้น (เช่น w2500) เพื่อความคมชัด
+            const highResSrc = imgSrc.replace(/&sz=w\d+/, '&sz=w2500');
+            modalImg.src = highResSrc;
+            
+            modal.classList.remove('hidden');
+            // บังคับให้เบราว์เซอร์รีเฟรชการแสดงผล (Reflow) เพื่อให้ Transition ทำงาน
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            modalImg.classList.remove('scale-95');
+            modalImg.classList.add('scale-100');
+            
+            // ล็อกหน้าจอพื้นหลังไม่ให้เลื่อนได้
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            
+            // รอแอนิเมชันจบ (300ms) แล้วค่อยซ่อนกล่องและคืนค่าเลื่อนหน้าจอ
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        // ผูกฟังก์ชันคลิกเข้ากับรูปภาพทั้งหมดที่มีคลาส .image-container
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageContainers = document.querySelectorAll('.image-container');
+            imageContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    const img = container.querySelector('img');
+                    if (img) openModal(img.src);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
