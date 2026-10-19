@@ -231,7 +231,7 @@
             
             <div class="text-slate-700 text-lg md:text-xl leading-relaxed mb-4 relative z-10 font-medium">
                 <p class="indent-text text-justify mb-6">
-                    นอกจากการปฏิบัติงานถ่ายภาพแล้ว ข้าพเจ้ายังให้ความสำคัญกับการจัดการฐานข้อมูลภาพถ่ายอย่างเป็นระบบ โดยได้ดำเนินการจัดระเบียบเป็นรูปแบบไฟล์รูปภาพ JPG และ PNG ทั้งหมด และจัดเก็บลงในฐานข้อมูลกลาง <strong class="text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-lg whitespace-nowrap">(โฟลเดอร์: CRA Edtech > 02 ภาพถ่าย > 69)</strong> โดยมีการตั้งชื่อโฟลเดอร์ให้เป็นมาตรฐานเดียวกัน คือ <strong class="text-slate-800 bg-slate-100 px-2 py-0.5 rounded-lg">"รหัสวันที่ (ปปดดวว) เว้นวรรค ชื่องาน"</strong> (เช่น 690225 ตลาดนัดนักศึกษา)
+                    นอกจากการปฏิบัติงานถ่ายภาพแล้ว ข้าพเจ้ายังให้ความสำคัญกับการจัดการฐานข้อมูลภาพถ่ายอย่างเป็นระบบ โดยได้ดำเนินการจัดระเบียบไฟล์ภาพนิ่งทั้งหมด และจัดเก็บลงในฐานข้อมูลกลาง <strong class="text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-lg whitespace-nowrap">(โฟลเดอร์: CRA Edtech > 02 ภาพถ่าย > 69)</strong> โดยมีการตั้งชื่อโฟลเดอร์ให้เป็นมาตรฐานเดียวกัน คือ <strong class="text-slate-800 bg-slate-100 px-2 py-0.5 rounded-lg">"รหัสวันที่ (ปปดดวว) เว้นวรรค ชื่องาน"</strong> (เช่น 690225 ตลาดนัดนักศึกษา)
                 </p>
                 <p class="indent-text text-justify">
                     เพื่อให้เป็นระเบียบ สะดวกต่อการสืบค้นข้อมูลย้อนหลัง และเป็นประโยชน์ต่อการนำไปใช้งานของหน่วยงานในอนาคต
@@ -365,6 +365,58 @@
 
         // สั่งให้ดึงข้อมูลทันทีที่เปิดหน้านี้ขึ้นมา
         window.addEventListener('DOMContentLoaded', fetchFeedbacks);
+
+        // --- ระบบ Lightbox ---
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const highResSrc = imgSrc.replace(/&sz=w\d+/, '&sz=w2500');
+            modalImg.src = highResSrc;
+            
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            
+            modal.classList.remove('opacity-0');
+            modalImg.classList.remove('scale-95');
+            modalImg.classList.add('scale-100');
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageContainers = document.querySelectorAll('.image-container');
+            imageContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    const img = container.querySelector('img');
+                    if (img) openModal(img.src);
+                });
+            });
+        });
     </script>
+
+    <!-- Image Modal (Lightbox) -->
+    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeModal()">
+        <button onclick="closeModal()" class="absolute top-6 right-6 md:top-10 md:right-10 text-white/70 hover:text-white transition-colors z-50 bg-black/50 hover:bg-black/80 rounded-full p-2 shadow-lg hover:scale-110 transform duration-200">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="w-full h-full p-4 md:p-12 relative flex justify-center items-center pointer-events-none">
+            <img id="modalImage" src="" alt="ภาพขยายใหญ่" class="max-w-full max-h-full object-contain rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-300 pointer-events-auto" onclick="event.stopPropagation()">
+        </div>
+    </div>
 </body>
 </html>
