@@ -192,10 +192,63 @@
                         หลักฐานเอกสารอ้างอิง
                     </span>
                 </div>
-                <img src="https://drive.google.com/thumbnail?id=1L90zwT_0NzKHspCREYxySBDHz2hz2HY6&sz=w1200" alt="เอกสารอ้างอิงหน้าที่รับผิดชอบ" class="w-full h-auto object-cover image-hover-zoom">
+                <img src="https://drive.google.com/thumbnail?id=15rqK_8IFpN5YPFlNB6iFxiPtZYVCYtvA&sz=w1200" alt="เอกสารอ้างอิงหน้าที่รับผิดชอบ" class="w-full h-auto object-cover image-hover-zoom">
             </div>
         </section>
 
     </div>
+
+    <!-- Image Modal (Lightbox) -->
+    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeModal()">
+        <button onclick="closeModal()" class="absolute top-6 right-6 md:top-10 md:right-10 text-white/70 hover:text-white transition-colors z-50 bg-black/50 hover:bg-black/80 rounded-full p-2 shadow-lg hover:scale-110 transform duration-200">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="w-full h-full p-4 md:p-12 relative flex justify-center items-center pointer-events-none">
+            <img id="modalImage" src="" alt="ภาพขยายใหญ่" class="max-w-full max-h-full object-contain rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-300 pointer-events-auto" onclick="event.stopPropagation()">
+        </div>
+    </div>
+
+    <script>
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const highResSrc = imgSrc.replace(/&sz=w\d+/, '&sz=w2500');
+            modalImg.src = highResSrc;
+            
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; // trigger reflow
+            
+            modal.classList.remove('opacity-0');
+            modalImg.classList.remove('scale-95');
+            modalImg.classList.add('scale-100');
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageContainers = document.querySelectorAll('.image-container');
+            imageContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    const img = container.querySelector('img');
+                    if (img) openModal(img.src);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
